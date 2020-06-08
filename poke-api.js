@@ -40,6 +40,7 @@ module.exports.getMove = function(url) {
     }
   })
   return deferred.promise;
+}
 
 
 /*
