@@ -30,6 +30,9 @@ module.exports.getSprite = function(url) {
 module.exports.getMove = function(url) {
   var deferred = Q.defer();
   request(url, function (error, response, body) {
+    console.log("Error: " + error)
+    console.log("Response: " + response)
+    console.log("Body: " + body)
     if (response.statusCode == 200) {
       deferred.resolve(JSON.parse(body));
     } else {
@@ -37,7 +40,7 @@ module.exports.getMove = function(url) {
     }
   })
   return deferred.promise;
-}
+
 
 /*
 * Calculates the effectiveness of one move on a pokemon with 1 or 2 types.
