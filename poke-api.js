@@ -5,7 +5,7 @@ module.exports = {}
 
 module.exports.getPokemon = function(name) {
   var deferred = Q.defer();
-  request("http://pokeapi.co/api/v1/pokemon/"+name, function (error, response, body) {
+  request("http://pokeapi.co/api/v2/pokemon/"+name, function (error, response, body) {
     if (response.statusCode == 200) {
       deferred.resolve(JSON.parse(body));
     } else {
@@ -42,7 +42,7 @@ module.exports.getMove = function(url) {
 /*
 * Calculates the effectiveness of one move on a pokemon with 1 or 2 types.
 * When accessing a move from the API, it will return with three arrays that look like this:
-* "super_effective": [{name:"fairy", resource_uri:"/api/v1/type/18"} ... ]
+* "super_effective": [{name:"fairy", resource_uri:"/api/v2/type/18"} ... ]
 * We only care about the name, so we map these arrays to something like:
 * supereffective = ["fairy", "ice", ...]
 * then we can go through and calculate the damage multiplier based on the three arrays.
@@ -71,7 +71,7 @@ module.exports.getAttackMultiplier = function(offensive, defensive1, defensive2)
       ],
       typeID = typesArray.indexOf(offensive.toLowerCase()) + 1,
       deferred = Q.defer();
-  request("http://pokeapi.co/api/v1/type/"+typeID, function(error, response, body){
+  request("http://pokeapi.co/api/v2/type/"+typeID, function(error, response, body){
     if(response.statusCode == 200) {
       var d = JSON.parse(body),
           ineffective = d.ineffective.map(function(val){return val.name}),
